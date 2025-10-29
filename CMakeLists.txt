@@ -2,7 +2,7 @@
 
 cmake_minimum_required(VERSION 3.14)
 
-project(SPERR VERSION 0.8.2 LANGUAGES CXX DESCRIPTION "Lossy Scientific Compression with SPERR")
+project(SPERR VERSION 0.8.2 LANGUAGES CXX C DESCRIPTION "Lossy Scientific Compression with SPERR")
 
 if(NOT CMAKE_CXX_STANDARD)
     set(CMAKE_CXX_STANDARD "20" CACHE STRING "Choose the C++ Standard to use." FORCE)
@@ -44,13 +44,19 @@ if(USE_OMP)
   endif()
 endif()
 find_package(PkgConfig)
-find_package(SymEngine REQUIRED)
-pkg_check_modules(GMP REQUIRED gmp)
-if (GMP_FOUND)
-    message("GMP found.")
-else()
-    message("GMP not found.")
-endif()
+
+add_subdirectory(symengine)
+include_directories("${CMAKE_SOURCE_DIR}/symengine")
+include_directories("${CMAKE_SOURCE_DIR}/symengine/build")
+include_directories("/opt/homebrew/opt/gmp/include")
+include_directories("${CMAKE_SOURCE_DIR}/zstd")
+
+#pkg_check_modules(GMP REQUIRED gmp)
+#if (GMP_FOUND)
+#    message("GMP found.")
+#else()
+#    message("GMP not found.")
+#endif()
 
 
 
@@ -124,7 +130,7 @@ if( BUILD_CLI_UTILITIES )
   # Download and build CLI11
   #
   include(FetchContent)
- 
+
 
   # Control internal options of CLI11
   #
@@ -172,7 +178,7 @@ if( BUILD_UNIT_TESTS )
   #
   file( COPY ${CMAKE_CURRENT_SOURCE_DIR}/test_data DESTINATION ${CMAKE_CURRENT_BINARY_DIR} )
 
-  enable_testing() # calling this function before adding subdirectory to enable 
+  enable_testing() # calling this function before adding subdirectory to enable
                    # invoking ctest from the top-level build directory.
   add_subdirectory( test_scripts )
 endif()
@@ -207,4 +213,3 @@ endif()
 configure_file("${CMAKE_SOURCE_DIR}/SPERR.pc.in" SPERR.pc @ONLY)
 install( FILES "${CMAKE_BINARY_DIR}/SPERR.pc" DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/pkgconfig)
 install( FILES "${CMAKE_BINARY_DIR}/SperrConfig.h" DESTINATION ${CMAKE_INSTALL_INCLUDEDIR} )
-

@@ -8,6 +8,8 @@
 
 #include "SPERR3D_Stream_Tools.h"
 
+#include "qoi/QoIInfo.hpp"
+
 auto C_API::sperr_comp_2d(const void* src,
                           int is_float,
                           size_t dimx,
@@ -170,7 +172,9 @@ auto C_API::sperr_comp_3d(const void* src,
                           double quality,
                           size_t nthreads,
                           void** dst,
-                          size_t* dst_len) -> int
+                          size_t* dst_len,
+                          const char* qoi,
+                          bool high_prec) -> int
 {
   // Examine if `dst` is pointing to a NULL pointer
   if (*dst != nullptr)
@@ -201,6 +205,15 @@ auto C_API::sperr_comp_3d(const void* src,
       encoder->set_direct_q(quality);
       break;
 #endif
+    case 5:  // QoI
+        encoder->set_qoi_id(1); // symbolic QoI
+        encoder->set_qoi_string(qoi);  // QoI expression
+        encoder->set_tolerance(std::numeric_limits<double>::max());  // just a dummy
+        encoder->set_qoi_tol(quality); // quality
+        encoder->set_qoi_block_size(1); // pointwise
+        encoder->set_qoi_k(3.0); // default c parameter
+        encoder->set_high_prec(high_prec); // high precision, needed for small error bounds
+        break;
     default:
       return 2;
   }

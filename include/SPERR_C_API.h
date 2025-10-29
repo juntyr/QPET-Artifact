@@ -116,7 +116,9 @@ int sperr_comp_3d(
     double quality,   /* Input: target quality */
     size_t nthreads,  /* Input: number of OpenMP threads to use. 0 means using all threads. */
     void** dst,       /* Output: buffer for the output bitstream, allocated by this function */
-    size_t* dst_len); /* Output: length of `dst` in byte */
+    size_t* dst_len,
+    const char* qoi,
+    bool high_prec); /* Output: length of `dst` in byte */
 
 /*
  * Decompress a 3D SPERR-compressed buffer that is produced by sperr_comp_3d().
