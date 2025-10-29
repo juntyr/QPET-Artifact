@@ -212,7 +212,7 @@ auto C_API::sperr_comp_3d(const void* src,
       break;
 #endif
     case 5:  // QoI
-        qoi_meta.qoi_id = 1; // symbolic QoI
+        qoi_meta.qoi_id = 14; // symbolic QoI
         qoi_meta.qoi_string = qoi; // QoI expression
         qoi_meta.qoi_base = std::exp(1.0); // base e by default
         qoi_meta.analytical = false; // not analytical by default
