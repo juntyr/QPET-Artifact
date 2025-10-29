@@ -8,6 +8,7 @@
 
 #include "SPERR3D_Stream_Tools.h"
 
+#include "qoi/QoI.hpp"
 #include "qoi/QoIInfo.hpp"
 
 auto C_API::sperr_comp_2d(const void* src,
@@ -190,28 +191,36 @@ auto C_API::sperr_comp_3d(const void* src,
   auto encoder = std::make_unique<sperr::SPERR3D_OMP_C>();
   encoder->set_dims_and_chunks(dims, chunks);
   encoder->set_num_threads(nthreads);
+  QoZ::QoIMeta qoi_meta;
   switch (mode) {
     case 1:  // fixed bitrate
       encoder->set_bitrate(quality);
+      encoder->set_qoi_id(0);
       break;
     case 2:  // fixed PSNR
       encoder->set_psnr(quality);
+      encoder->set_qoi_id(0);
       break;
     case 3:  // fixed PWE
       encoder->set_tolerance(quality);
+      encoder->set_qoi_id(0);
       break;
 #ifdef EXPERIMENTING
     case -4:  // fixed quantisation step
       encoder->set_direct_q(quality);
+      encoder->set_qoi_id(0);
       break;
 #endif
     case 5:  // QoI
-        encoder->set_qoi_id(1); // symbolic QoI
-        encoder->set_qoi_string(qoi);  // QoI expression
+        qoi_meta.qoi_id = 1; // symbolic QoI
+        qoi_meta.qoi_string = qoi; // QoI expression
+        qoi_meta.qoi_base = std::exp(1.0); // base e by default
+        qoi_meta.analytical = false; // not analytical by default
+        encoder->set_qoi_meta(qoi_meta);
         encoder->set_tolerance(std::numeric_limits<double>::max());  // just a dummy
-        encoder->set_qoi_tol(quality); // quality
-        encoder->set_qoi_block_size(1); // pointwise
-        encoder->set_qoi_k(3.0); // default c parameter
+        encoder->set_qoi_tol(quality); // QoI absolute error bound
+        encoder->set_qoi_block_size(1); // pointwise by default
+        encoder->set_qoi_k(3.0); // c=3 by default
         encoder->set_high_prec(high_prec); // high precision, needed for small error bounds
         break;
     default:
