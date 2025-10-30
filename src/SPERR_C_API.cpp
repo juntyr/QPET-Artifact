@@ -177,6 +177,7 @@ auto C_API::sperr_comp_3d(const void* src,
                           const char* qoi,
                           bool high_prec) -> int
 {
+    try {
   // Examine if `dst` is pointing to a NULL pointer
   if (*dst != nullptr)
     return 1;
@@ -215,7 +216,7 @@ auto C_API::sperr_comp_3d(const void* src,
         qoi_meta.qoi_id = 14; // symbolic QoI
         qoi_meta.qoi_string = qoi; // QoI expression
         qoi_meta.qoi_base = std::exp(1.0); // base e by default
-        qoi_meta.analytical = false; // not analytical by default
+        qoi_meta.analytical = true; // analytical, if possible
         encoder->set_qoi_meta(qoi_meta);
         encoder->set_tolerance(std::numeric_limits<double>::max());  // just a dummy
         encoder->set_qoi_tol(quality); // QoI absolute error bound
@@ -245,6 +246,10 @@ auto C_API::sperr_comp_3d(const void* src,
   *dst = buf;
 
   return 0;
+    } catch (const std::exception& e) {
+        std::cerr << e.what() << std::endl;
+        return 0;
+    }
 }
 
 auto C_API::sperr_decomp_3d(const void* src,

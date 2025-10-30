@@ -27,7 +27,7 @@ namespace QoZ {
         auto qoi_string = meta.qoi_string;
         auto qoi_string_2 = meta.qoi_string_2;
         if(meta.qoi_id == 14){
-            
+
             if(qoi_string == "x^2" or qoi_string == "x**2")
                 meta.qoi_id = 1;
             else if(qoi_string == "logx" or qoi_string == "log(x)" or qoi_string == "Logx" or qoi_string == "Log(x)" or qoi_string == "lnx" or qoi_string == "ln(x)" or qoi_string == "Lnx" or qoi_string == "Ln(x)"){
@@ -37,6 +37,10 @@ namespace QoZ {
             else if(qoi_string == "log2(x)"  or qoi_string == "Log2(x)"  or qoi_string == "Log(x,2)"  or qoi_string == "log(x,2)"){
                 meta.qoi_id = 2;
                 meta.qoi_base = 2.0;
+            }
+            else if(qoi_string == "log10(x)"  or qoi_string == "Log10(x)"  or qoi_string == "Log(x,10)"  or qoi_string == "log(x,10)"){
+                meta.qoi_id = 2;
+                meta.qoi_base = 10.0;
             }
 
             else if (qoi_string == "x^3" or qoi_string == "x**3")
@@ -81,7 +85,7 @@ namespace QoZ {
                     return std::make_shared<QoZ::QoI_X_Cubic<T>>(qoiEB, absErrorBound);
                 else
                     return std::make_shared<QoZ::QoI_X_Cubic_Approx<T>>(qoiEB, absErrorBound);
-            }       
+            }
             case 10:{
                 //return std::make_shared<QoZ::QoI_X_Sin<T>>(qoiEB, absErrorBound);
                 if(analytical)
