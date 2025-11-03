@@ -45,11 +45,6 @@ auto C_API::sperr_comp_2d(const void* src,
     case 3:  // fixed PWE
       encoder->set_tolerance(quality);
       break;
-#ifdef EXPERIMENTING
-    case -4:  // fixed quantisation step
-      encoder->set_direct_q(quality);
-      break;
-#endif
     default:
       return 2;
   }
@@ -192,22 +187,13 @@ auto C_API::sperr_comp_3d(const void* src,
   switch (mode) {
     case 1:  // fixed bitrate
       encoder->set_bitrate(quality);
-      encoder->set_qoi_id(0);
       break;
     case 2:  // fixed PSNR
       encoder->set_psnr(quality);
-      encoder->set_qoi_id(0);
       break;
     case 3:  // fixed PWE
       encoder->set_tolerance(quality);
-      encoder->set_qoi_id(0);
       break;
-#ifdef EXPERIMENTING
-    case -4:  // fixed quantisation step
-      encoder->set_direct_q(quality);
-      encoder->set_qoi_id(0);
-      break;
-#endif
     default:
       return 2;
   }

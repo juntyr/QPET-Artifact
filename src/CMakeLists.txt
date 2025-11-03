@@ -51,7 +51,7 @@ set_target_properties( SPERR PROPERTIES OUTPUT_NAME "QPET-SPERR" )
 #
 # The list of headers is formatted a little cumbersome, but don't change it!
 #
-set( public_h_list
+set( public_h_list 
 "include/sperr_helper.h;\
 include/Bitstream.h;\
 include/Bitmask.h;\
@@ -77,3 +77,4 @@ include/SPERR3D_OMP_D.h;\
 include/Outlier_Coder.h;\
 include/SPERR_C_API.h;")
 set_target_properties( SPERR PROPERTIES PUBLIC_HEADER "${public_h_list}" )
+

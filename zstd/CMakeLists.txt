@@ -54,8 +54,6 @@ target_include_directories(zstd
     ${CMAKE_CURRENT_SOURCE_DIR}/legacy
   )
 
-set_target_properties(zstd PROPERTIES LINKER_LANGUAGE CXX)
-
 
 install(TARGETS zstd EXPORT QoZTargets
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} 
