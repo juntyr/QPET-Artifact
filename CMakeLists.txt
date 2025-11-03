@@ -44,13 +44,7 @@ if(USE_OMP)
   endif()
 endif()
 find_package(PkgConfig)
-
-add_subdirectory(symengine)
-include_directories("${CMAKE_SOURCE_DIR}/symengine")
-include_directories("${CMAKE_SOURCE_DIR}/symengine/build")
-include_directories("/opt/homebrew/opt/gmp/include")
-include_directories("${CMAKE_SOURCE_DIR}/zstd")
-
+#find_package(SymEngine REQUIRED)
 #pkg_check_modules(GMP REQUIRED gmp)
 #if (GMP_FOUND)
 #    message("GMP found.")
@@ -58,6 +52,9 @@ include_directories("${CMAKE_SOURCE_DIR}/zstd")
 #    message("GMP not found.")
 #endif()
 
+add_subdirectory(symengine)
+include_directories("${CMAKE_SOURCE_DIR}/symengine")
+include_directories("${CMAKE_SOURCE_DIR}/symengine/build")
 
 
 #
@@ -112,15 +109,15 @@ add_subdirectory( src )
 target_link_libraries(${PROJECT_NAME} PUBLIC symengine)
 target_link_libraries(${PROJECT_NAME} PUBLIC gmp)
 
-pkg_search_module(ZSTD IMPORTED_TARGET libzstd)
-if(ZSTD_FOUND)
-  message("Zstd found.")
-  target_link_libraries(${PROJECT_NAME} INTERFACE PkgConfig::ZSTD)
-else()
-  message("Zstd not found.")
-  add_subdirectory(zstd)
-  target_link_libraries(${PROJECT_NAME} INTERFACE zstd)
-endif()
+#pkg_search_module(ZSTD IMPORTED_TARGET libzstd)
+#if(ZSTD_FOUND)
+#  message("Zstd found.")
+#  target_link_libraries(${PROJECT_NAME} INTERFACE PkgConfig::ZSTD)
+#else()
+#  message("Zstd not found.")
+#  add_subdirectory(zstd)
+#  target_link_libraries(${PROJECT_NAME} INTERFACE zstd)
+#endif()
 
 
 #
@@ -130,7 +127,7 @@ if( BUILD_CLI_UTILITIES )
   # Download and build CLI11
   #
   include(FetchContent)
-
+ 
 
   # Control internal options of CLI11
   #
@@ -178,7 +175,7 @@ if( BUILD_UNIT_TESTS )
   #
   file( COPY ${CMAKE_CURRENT_SOURCE_DIR}/test_data DESTINATION ${CMAKE_CURRENT_BINARY_DIR} )
 
-  enable_testing() # calling this function before adding subdirectory to enable
+  enable_testing() # calling this function before adding subdirectory to enable 
                    # invoking ctest from the top-level build directory.
   add_subdirectory( test_scripts )
 endif()
@@ -213,3 +210,4 @@ endif()
 configure_file("${CMAKE_SOURCE_DIR}/SPERR.pc.in" SPERR.pc @ONLY)
 install( FILES "${CMAKE_BINARY_DIR}/SPERR.pc" DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/pkgconfig)
 install( FILES "${CMAKE_BINARY_DIR}/SperrConfig.h" DESTINATION ${CMAKE_INSTALL_INCLUDEDIR} )
+
