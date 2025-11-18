@@ -161,7 +161,7 @@ char *SZ_compress_LorenzoReg(QoZ::Config &conf, T *data, size_t &outSize, bool t
 
 
 template<class T, QoZ::uint N>
-void SZ_decompress_LorenzoReg(const QoZ::Config &theconf, char *cmpData, size_t cmpSize, T *decData) {
+void SZ_decompress_LorenzoReg(const QoZ::Config &theconf, const char *cmpData, size_t cmpSize, T *decData) {
 
     QoZ::Config conf(theconf);
     //std::cout<<"ABSEB "<<conf.absErrorBound<<std::endl;

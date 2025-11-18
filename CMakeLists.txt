@@ -19,7 +19,11 @@ endif()
 
 find_package(PkgConfig)
 
-find_package(SymEngine REQUIRED)
+#find_package(SymEngine REQUIRED)
+
+add_subdirectory(symengine)
+include_directories("${CMAKE_SOURCE_DIR}/symengine")
+include_directories("${CMAKE_SOURCE_DIR}/symengine/build")
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/include/QoZ/version.hpp.in ${CMAKE_CURRENT_SOURCE_DIR}/include/QoZ/version.hpp)
 
@@ -33,12 +37,12 @@ target_compile_features(${PROJECT_NAME}
     INTERFACE cxx_std_17
   )
 
-pkg_check_modules(GMP REQUIRED gmp)
-if (GMP_FOUND)
-    message("GMP found.")
-else()
-    message("GMP not found.")
-endif()
+#pkg_check_modules(GMP REQUIRED gmp)
+#if (GMP_FOUND)
+#    message("GMP found.")
+#else()
+#    message("GMP not found.")
+#endif()
 
 target_link_libraries(${PROJECT_NAME} INTERFACE symengine)
 target_link_libraries(${PROJECT_NAME} INTERFACE gmp)
@@ -52,7 +56,7 @@ else()
     message("OpenMP not found or skipped.")
 endif ()
 
-option(QoZ_USE_BUNDLED_ZSTD "prefer the bundled version of Zstd" OFF)
+#option(QoZ_USE_BUNDLED_ZSTD "prefer the bundled version of Zstd" OFF)
 option(QoZ_DEBUG_TIMINGS "print debug timing information" ON)
 
 if(QoZ_DEBUG_TIMINGS)
@@ -61,29 +65,29 @@ else()
   target_compile_definitions(${PROJECT_NAME} INTERFACE QoZ_DEBUG_TIMINGS=0)
 endif()
 
-pkg_search_module(ZSTD IMPORTED_TARGET libzstd)
-if(ZSTD_FOUND AND NOT QoZ_USE_BUNDLED_ZSTD)
-  message("Zstd found.")
-  target_link_libraries(${PROJECT_NAME} INTERFACE PkgConfig::ZSTD)
-else()
-  message("Zstd not found.")
-  add_subdirectory(zstd)
-  target_link_libraries(${PROJECT_NAME} INTERFACE zstd)
-endif()
+#pkg_search_module(ZSTD IMPORTED_TARGET libzstd)
+#if(ZSTD_FOUND AND NOT QoZ_USE_BUNDLED_ZSTD)
+#  message("Zstd found.")
+#  target_link_libraries(${PROJECT_NAME} INTERFACE PkgConfig::ZSTD)
+#else()
+#  message("Zstd not found.")
+#  add_subdirectory(zstd)
+#  target_link_libraries(${PROJECT_NAME} INTERFACE zstd)
+#endif()
 
-find_package(GSL)
-if (GSL_FOUND)
-  message("GSL found.")
-  target_link_libraries(${PROJECT_NAME} INTERFACE GSL::gsl)
-  target_compile_definitions(${PROJECT_NAME} INTERFACE -DENABLE_GSL="TRUE")
-else()
-  message("GSL not found.")
-endif()
-
-
+#find_package(GSL)
+#if (GSL_FOUND)
+#  message("GSL found.")
+#  target_link_libraries(${PROJECT_NAME} INTERFACE GSL::gsl)
+#  target_compile_definitions(${PROJECT_NAME} INTERFACE -DENABLE_GSL="TRUE")
+#else()
+#  message("GSL not found.")
+#endif()
 
 
-add_subdirectory(test)
+
+
+#add_subdirectory(test)
 
 install(TARGETS ${PROJECT_NAME} 
   EXPORT QoZTargets

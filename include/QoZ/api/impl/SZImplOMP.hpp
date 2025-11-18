@@ -109,7 +109,7 @@ char *SZ_compress_OMP(QoZ::Config &conf, const T *data, size_t &outSize) {
 
 
 template<class T, QoZ::uint N>
-void SZ_decompress_OMP(const QoZ::Config &conf, char *cmpData, size_t cmpSize, T *decData) {
+void SZ_decompress_OMP(const QoZ::Config &conf, const char *cmpData, size_t cmpSize, T *decData) {
 #ifdef _OPENMP
 
     const unsigned char *cmpr_data_pos = (unsigned char *) cmpData;

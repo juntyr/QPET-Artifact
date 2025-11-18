@@ -25,7 +25,7 @@ char *SZ_compress_impl(QoZ::Config &conf, T *data, size_t &outSize) {
 
 
 template<class T, QoZ::uint N>
-void SZ_decompress_impl(QoZ::Config &conf, char *cmpData, size_t cmpSize, T *decData) {
+void SZ_decompress_impl(QoZ::Config &conf, const char *cmpData, size_t cmpSize, T *decData) {
 #ifndef _OPENMP
     conf.openmp=false;
 #endif

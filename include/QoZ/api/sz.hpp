@@ -139,7 +139,7 @@ char *SZ_compress(const QoZ::Config &config, T *data, size_t &outSize) {
 
  */
 template<class T>
-void SZ_decompress( QoZ::Config &config, char *cmpData, size_t cmpSize, T *&decData) {
+void SZ_decompress( QoZ::Config &config, const char *cmpData, size_t cmpSize, T *&decData) {
     //QoZ::Timer timer(true);
    
     QoZ::Config conf(config);

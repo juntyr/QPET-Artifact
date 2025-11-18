@@ -283,7 +283,7 @@ char *SZ_compress_Interp(QoZ::Config &conf, T *data, size_t &outSize) {
 }
 
 template<class T, QoZ::uint N>
-void SZ_decompress_Interp(QoZ::Config &conf, char *cmpData, size_t cmpSize, T *decData) {
+void SZ_decompress_Interp(QoZ::Config &conf, const char *cmpData, size_t cmpSize, T *decData) {
     assert(conf.cmprAlgo == QoZ::ALGO_INTERP);
     QoZ::uchar const *cmpDataPos = (QoZ::uchar *) cmpData;
 
@@ -295,7 +295,7 @@ void SZ_decompress_Interp(QoZ::Config &conf, char *cmpData, size_t cmpSize, T *d
         //outlier_data.resize(confs[i].num);
         auto zstd = QoZ::Lossless_zstd();
         cmpSize-=offset_size;
-        offset_data = reinterpret_cast<T *> ( zstd.decompress(reinterpret_cast<QoZ::uchar *>(cmpData)+cmpSize, offset_size) );
+        offset_data = reinterpret_cast<T *> ( zstd.decompress(reinterpret_cast<const QoZ::uchar *>(cmpData)+cmpSize, offset_size) );
         
     } 
 

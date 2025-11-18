@@ -41,7 +41,7 @@ char *SZ_compress_dispatcher(QoZ::Config &conf, T *data, size_t &outSize) {
 
 
 template<class T, QoZ::uint N>
-void SZ_decompress_dispatcher(QoZ::Config &conf, char *cmpData, size_t cmpSize, T *decData) {
+void SZ_decompress_dispatcher(QoZ::Config &conf, const char *cmpData, size_t cmpSize, T *decData) {
  
     if (conf.cmprAlgo == QoZ::ALGO_LORENZO_REG) {
         SZ_decompress_LorenzoReg<T, N>(conf, cmpData, cmpSize, decData);
