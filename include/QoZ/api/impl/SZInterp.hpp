@@ -1695,14 +1695,14 @@ double Tuning(QoZ::Config &conf, T *data){
 
     for (size_t i = 0; i < N; i++) {
         if ( max_interp_level < ceil(log2(conf.dims[i]))) {
-             max_interp_level = (uint) ceil(log2(conf.dims[i]));
+             max_interp_level = (QoZ::uint) ceil(log2(conf.dims[i]));
         }
                 
     }
     
     if (conf.maxStep>0){
         anchor_rate=1/(pow(conf.maxStep,N));   
-        int temp_max_interp_level=(uint)log2(conf.maxStep);//to be catious: the max_interp_level is different from the ones in szinterpcompressor, which includes the level of anchor grid.
+        int temp_max_interp_level=(QoZ::uint)log2(conf.maxStep);//to be catious: the max_interp_level is different from the ones in szinterpcompressor, which includes the level of anchor grid.
         if (temp_max_interp_level<=max_interp_level){                  
             max_interp_level=temp_max_interp_level;
         }
@@ -1746,7 +1746,7 @@ double Tuning(QoZ::Config &conf, T *data){
         conf.autoTuningRate=0.0;
     }
     else{
-        int max_lps_level=(uint)log2(conf.sampleBlockSize);//to be catious: the max_interp_level is different from the ones in szinterpcompressor, which includes the level of anchor grid.
+        int max_lps_level=(QoZ::uint)log2(conf.sampleBlockSize);//to be catious: the max_interp_level is different from the ones in szinterpcompressor, which includes the level of anchor grid.
 
         if (conf.levelwisePredictionSelection>max_lps_level)
             conf.levelwisePredictionSelection=max_lps_level;
