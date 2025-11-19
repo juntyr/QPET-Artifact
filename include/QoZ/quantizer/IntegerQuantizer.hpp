@@ -35,7 +35,7 @@ namespace QoZ {
         int quantize(T data, T pred) {
             
             T diff = data - pred;
-            int quant_index = (int) (fabs(diff) * this->error_bound_reciprocal) + 1;
+            auto quant_index = (int64_t) (fabs(diff) * this->error_bound_reciprocal) + 1;
             if (quant_index < this->radius * 2) {
                 quant_index >>= 1;
                 int half_index = quant_index;
@@ -64,7 +64,7 @@ namespace QoZ {
 
             
             T diff = data - pred;
-            int quant_index = (int) (fabs(diff) * this->error_bound_reciprocal) + 1;
+            auto quant_index = (int64_t) (fabs(diff) * this->error_bound_reciprocal) + 1;
             if (quant_index < this->radius * 2) {
                 quant_index >>= 1;
                 int half_index = quant_index;
@@ -96,7 +96,7 @@ namespace QoZ {
 
             
             T diff = ori - pred;
-            int quant_index = (int) (fabs(diff) * this->error_bound_reciprocal) + 1;
+            auto quant_index = (int64_t) (fabs(diff) * this->error_bound_reciprocal) + 1;
             if (quant_index < this->radius * 2) {
                 quant_index >>= 1;
                 int half_index = quant_index;

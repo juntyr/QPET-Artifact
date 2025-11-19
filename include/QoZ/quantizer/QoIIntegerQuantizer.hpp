@@ -22,7 +22,7 @@ namespace QoZ {
         int quantize(T data, T pred, T_eb eb) {
             if(eb == 0) return 0;
             T diff = data - pred;
-            int quant_index = (int) (fabs(diff) / eb) + 1;
+            auto quant_index = (int64_t) (fabs(diff) / eb) + 1;
             if (quant_index < this->radius * 2) {
                 quant_index >>= 1;
                 int half_index = quant_index;
@@ -55,7 +55,7 @@ namespace QoZ {
             //     std::cout << data << " " << pred << " " << eb << std::endl;
             // }
             T diff = data - pred;
-            int quant_index = (int) (fabs(diff) / eb) + 1;
+            auto quant_index = (int64_t) (fabs(diff) / eb) + 1;
             if (quant_index < this->radius * 2) {
                 quant_index >>= 1;
                 int half_index = quant_index;
@@ -91,7 +91,7 @@ namespace QoZ {
                 return 0;
             }
             T diff = ori - pred;
-            int quant_index = (int) (fabs(diff) / eb) + 1;
+            auto quant_index = (int64_t) (fabs(diff) / eb) + 1;
             if (quant_index < this->radius * 2) {
                 quant_index >>= 1;
                 int half_index = quant_index;
